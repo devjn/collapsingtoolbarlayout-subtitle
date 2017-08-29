@@ -12,14 +12,13 @@ allprojects {
     ext.versions = [
             // android
             sdk       : [
-                    min   : 9,
-                    target: 25,
+                    min   : 14,
+                    target: 26,
             ],
-            buildTools: '26.0.0',
+            buildTools: '26.0.1',
 
             // main
-            support   : '25.4.0',
-            kota      : '0.1.4',
+            support   : '26.0.1',
 
             // test
             errorview : '0.8.1',
@@ -28,7 +27,7 @@ allprojects {
             espresso  : '2.2.2',
             junit     : '4.12',
 
-            release   : '0.7.0'
+            release   : '0.7.1'
     ]
     repositories {
         maven { url 'https://maven.google.com' }

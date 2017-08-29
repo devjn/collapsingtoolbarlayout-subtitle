@@ -16,10 +16,11 @@
 
 package android.support.design.widget;
 
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -35,6 +36,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.StyleRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
@@ -49,15 +51,13 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 
 import com.hendraanggrian.collapsingtoolbarlayout.subtitle.R;
-import com.hendraanggrian.kota.content.ConfigurationsKt;
-import com.hendraanggrian.kota.content.ResourcesKt;
-import com.hendraanggrian.kota.content.ThemesKt;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  * @see CollapsingToolbarLayout
  */
 @SuppressWarnings("unused")
+@SuppressLint("ResourceType")
 public class SubtitleCollapsingToolbarLayout extends FrameLayout {
 
     private static final int DEFAULT_SCRIM_ANIMATION_DURATION = 600;
@@ -82,7 +82,7 @@ public class SubtitleCollapsingToolbarLayout extends FrameLayout {
     Drawable mStatusBarScrim;
     private int mScrimAlpha;
     private boolean mScrimsAreShown;
-    private ValueAnimatorCompat mScrimAnimator;
+    private ValueAnimator mScrimAnimator;
     private long mScrimAnimationDuration;
     private int mScrimVisibleHeightTrigger = -1;
 
@@ -199,7 +199,7 @@ public class SubtitleCollapsingToolbarLayout extends FrameLayout {
         if (ViewCompat.getFitsSystemWindows(this)) {
             newInsets = insets;
         }
-        if (!ViewUtils.objectEquals(mLastInsets, newInsets)) {
+        if (!objectEquals(mLastInsets, newInsets)) {
             mLastInsets = newInsets;
             requestLayout();
         }
@@ -339,7 +339,7 @@ public class SubtitleCollapsingToolbarLayout extends FrameLayout {
                         ? mToolbar.getTitleMarginStart()
                         : mToolbar.getTitleMarginEnd());
                 if (useCorrectPadding && mToolbar.getMenu() != null && !mToolbar.getMenu().hasVisibleItems()) {
-                    int padding = ResourcesKt.getDimensionPixelSize(getContext(), ConfigurationsKt.isScreenSizeAtLeast(getContext(), Configuration.SCREENLAYOUT_SIZE_LARGE)
+                    int padding = getResources().getDimensionPixelSize(false //getContext().isScreenSizeAtLeast(getContext(), Configuration.SCREENLAYOUT_SIZE_LARGE)
                             ? R.dimen.appbar_horizontal_padding_large
                             : R.dimen.appbar_horizontal_padding);
                     if (isRtl)
@@ -447,16 +447,16 @@ public class SubtitleCollapsingToolbarLayout extends FrameLayout {
     private void animateScrim(int targetAlpha) {
         ensureToolbar();
         if (mScrimAnimator == null) {
-            mScrimAnimator = ViewUtils.createAnimator();
+            mScrimAnimator = new ValueAnimator();
             mScrimAnimator.setDuration(mScrimAnimationDuration);
             mScrimAnimator.setInterpolator(
                     targetAlpha > mScrimAlpha
                             ? AnimationUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR
                             : AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR);
-            mScrimAnimator.addUpdateListener(new ValueAnimatorCompat.AnimatorUpdateListener() {
+            mScrimAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
-                public void onAnimationUpdate(ValueAnimatorCompat animator) {
-                    setScrimAlpha(animator.getAnimatedIntValue());
+                public void onAnimationUpdate(ValueAnimator animator) {
+                    setScrimAlpha((Integer) animator.getAnimatedValue());
                 }
             });
         } else if (mScrimAnimator.isRunning()) {
@@ -501,7 +501,7 @@ public class SubtitleCollapsingToolbarLayout extends FrameLayout {
     }
 
     public void setContentScrimResource(@DrawableRes int resId) {
-        setContentScrim(ResourcesKt.getDrawable2(getContext(), resId));
+        setContentScrim(ContextCompat.getDrawable(getContext(), resId));
     }
 
     @Nullable
@@ -571,7 +571,7 @@ public class SubtitleCollapsingToolbarLayout extends FrameLayout {
     }
 
     public void setStatusBarScrimResource(@DrawableRes int resId) {
-        setStatusBarScrim(ResourcesKt.getDrawable2(getContext(), resId));
+        setStatusBarScrim(ContextCompat.getDrawable(getContext(), resId));
     }
 
     @Nullable
@@ -592,11 +592,11 @@ public class SubtitleCollapsingToolbarLayout extends FrameLayout {
     }
 
     public void setCollapsedTitleColorRes(@ColorRes int res) {
-        setCollapsedTitleColor(ResourcesKt.getColor2(getContext(), res));
+        setCollapsedTitleColor(ContextCompat.getColor(getContext(), res));
     }
 
     public void setCollapsedTitleColorAttr(@AttrRes int attr) {
-        setCollapsedTitleColor(ThemesKt.getColor(getContext().getTheme(), attr));
+        setCollapsedTitleColor(ContextCompat.getColor(getContext(), attr));
     }
 
     public void setCollapsedTitleColor(@NonNull ColorStateList colors) {
@@ -608,11 +608,11 @@ public class SubtitleCollapsingToolbarLayout extends FrameLayout {
     }
 
     public void setCollapsedSubtitleColorRes(@ColorRes int res) {
-        setCollapsedSubtitleColor(ResourcesKt.getColor2(getContext(), res));
+        setCollapsedSubtitleColor(ContextCompat.getColor(getContext(), res));
     }
 
     public void setCollapsedSubtitleColorAttr(@AttrRes int attr) {
-        setCollapsedSubtitleColor(ThemesKt.getColor(getContext().getTheme(), attr));
+        setCollapsedSubtitleColor(ContextCompat.getColor(getContext(), attr));
     }
 
     public void setCollapsedSubtitleColor(@NonNull ColorStateList colors) {
@@ -640,11 +640,11 @@ public class SubtitleCollapsingToolbarLayout extends FrameLayout {
     }
 
     public void setExpandedTitleColorRes(@ColorRes int res) {
-        setExpandedTitleColor(ResourcesKt.getColor2(getContext(), res));
+        setExpandedTitleColor(ContextCompat.getColor(getContext(), res));
     }
 
     public void setExpandedTitleColorAttr(@AttrRes int attr) {
-        setExpandedTitleColor(ThemesKt.getColor(getContext().getTheme(), attr));
+        setExpandedTitleColor(ContextCompat.getColor(getContext(), attr));
     }
 
     public void setExpandedTitleColor(@NonNull ColorStateList colors) {
@@ -656,11 +656,11 @@ public class SubtitleCollapsingToolbarLayout extends FrameLayout {
     }
 
     public void setExpandedSubtitleColorRes(@ColorRes int res) {
-        setExpandedSubtitleColor(ResourcesKt.getColor2(getContext(), res));
+        setExpandedSubtitleColor(ContextCompat.getColor(getContext(), res));
     }
 
     public void setExpandedSubtitleColorAttr(@AttrRes int attr) {
-        setExpandedSubtitleColor(ThemesKt.getColor(getContext().getTheme(), attr));
+        setExpandedSubtitleColor(ContextCompat.getColor(getContext(), attr));
     }
 
     public void setExpandedSubtitleColor(@NonNull ColorStateList colors) {
@@ -861,7 +861,7 @@ public class SubtitleCollapsingToolbarLayout extends FrameLayout {
                 final ViewOffsetHelper offsetHelper = getViewOffsetHelper(child);
                 switch (lp.mCollapseMode) {
                     case LayoutParams.COLLAPSE_MODE_PIN:
-                        offsetHelper.setTopAndBottomOffset(MathUtils.constrain(-verticalOffset, 0, getMaxOffsetForPinChild(child)));
+                        offsetHelper.setTopAndBottomOffset(android.support.design.widget.MathUtils.constrain(-verticalOffset, 0, getMaxOffsetForPinChild(child)));
                         break;
                     case LayoutParams.COLLAPSE_MODE_PARALLAX:
                         offsetHelper.setTopAndBottomOffset(Math.round(-verticalOffset * lp.mParallaxMult));
@@ -875,4 +875,11 @@ public class SubtitleCollapsingToolbarLayout extends FrameLayout {
             mCollapsingTextHelper.setExpansionFraction(Math.abs(verticalOffset) / (float) expandRange);
         }
     }
+
+    public static boolean objectEquals(Object o1, Object o2) {
+        if (o1 == null && o2 == null) return true;
+        if (o1 == null) return false;
+        return o1.equals(o2);
+    }
+
 }

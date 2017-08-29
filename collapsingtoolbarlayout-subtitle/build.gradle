@@ -26,18 +26,6 @@ android {
 
 dependencies {
     compile "com.android.support:design:$versions.support"
-    compile "com.hendraanggrian:kota:$versions.kota"
-    androidTestCompile "com.hendraanggrian:errorview:$versions.errorview"
-    androidTestCompile("com.android.support.test:rules:$versions.rules") {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile("com.android.support.test:runner:$versions.runner") {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile("com.android.support.test.espresso:espresso-core:$versions.espresso") {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    testCompile "junit:junit:$versions.junit"
 }
 
 publish {
