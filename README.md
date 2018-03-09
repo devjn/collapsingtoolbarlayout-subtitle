@@ -1,4 +1,4 @@
-SubtitleCollapsingToolbarLayout
+SubtitleCollapsingToolbarLayout    [![](https://jitpack.io/v/devjn/collapsingtoolbarlayout-subtitle.svg)](https://jitpack.io/#devjn/collapsingtoolbarlayout-subtitle)
 ===============================
 Standard `CollapsingToolbarLayout` with subtitle support.
 
