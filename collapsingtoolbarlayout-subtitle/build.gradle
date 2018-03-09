@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 27
+        versionName "27.1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+    }
+
+}
+
+
+ext {
+    bintrayUser = "hendraanggrian"
+    bintrayGroup = "com.hendraanggrian"
+    bintrayArtifact = "collapsingtoolbarlayout-subtitle"
+    bintrayDesc = "Standard CollapsingToolbarLayout with subtitle support"
+    bintrayWeb = "https://github.com/hendraanggrian/collapsingtoolbarlayout-subtitle"
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.android.support:design:$supportVersion"
+    implementation "com.android.support:support-v4:$supportVersion"
+}
+
+
+publish {
+    userOrg = bintrayUser
+    groupId = bintrayGroup
+    artifactId = bintrayArtifact
+    publishVersion = supportVersion
+    desc = bintrayDesc
+    website = bintrayWeb
+}
+
+tasks.withType(Javadoc).all {
+    enabled = false
+}
