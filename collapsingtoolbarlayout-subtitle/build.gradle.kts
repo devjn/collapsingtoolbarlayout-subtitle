@@ -1,9 +1,11 @@
+import org.gradle.kotlin.dsl.extra
+import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.kotlin
+import org.gradle.kotlin.dsl.setValue
 
 plugins {
     id("com.android.library")
     kotlin("android")
-    id("com.novoda.bintray-release")
 }
 
 android {
@@ -42,13 +44,4 @@ dependencies {
     androidTestImplementation(hendraanggrian("errorbar", errorbarVersion))
     androidTestImplementation(support("runner", runnerVersion, "test"))
     androidTestImplementation(support("espresso-core", espressoVersion, "test", "espresso"))
-}
-
-publish {
-    userOrg = bintrayUser
-    groupId = bintrayGroup
-    artifactId = bintrayArtifact
-    publishVersion = supportVersion
-    desc = bintrayDesc
-    website = bintrayWeb
 }

@@ -8,11 +8,11 @@ const val bintrayWeb = "https://github.com/hendraanggrian/collapsingtoolbarlayou
 
 const val minSdk = 14
 const val targetSdk = 27
-const val buildTools = "27.0.1"
+const val buildTools = "27.0.3"
 
-const val kotlinVersion = "1.1.60"
+const val kotlinVersion = "1.2.30"
 const val kotaVersion = "0.19"
-const val supportVersion = "27.0.1"
+const val supportVersion = "27.1.0"
 const val errorbarVersion = "0.3.0"
 
 const val junitVersion = "4.12"

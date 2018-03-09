@@ -17,6 +17,7 @@
 package android.support.design.widget
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Configuration
@@ -35,6 +36,7 @@ import android.support.v4.util.ObjectsCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.WindowInsetsCompat
+import android.support.v4.widget.ViewGroupUtils
 import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.util.AttributeSet
@@ -288,6 +290,7 @@ open class SubtitleCollapsingToolbarLayout @JvmOverloads constructor(
         }
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
         if (mLastInsets != null) {
