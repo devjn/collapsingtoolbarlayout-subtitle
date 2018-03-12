@@ -44,6 +44,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
+import android.support.design.animation.AnimationUtils;
 import android.widget.FrameLayout
 import com.hendraanggrian.collapsingtoolbarlayout.subtitle.R
 
@@ -89,10 +90,8 @@ open class SubtitleCollapsingToolbarLayout @JvmOverloads constructor(
     private var mFixPadding: Boolean
 
     init {
-        ThemeUtils.checkAppCompatTheme(context)
-
         mCollapsingTextHelper = SubtitleCollapsingTextHelper(this)
-        mCollapsingTextHelper.setTextSizeInterpolator(AnimationUtils.DECELERATE_INTERPOLATOR)
+        mCollapsingTextHelper.setTextSizeInterpolator(android.support.design.animation.AnimationUtils.DECELERATE_INTERPOLATOR)
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.SubtitleCollapsingToolbarLayout, defStyleAttr, R.style.Widget_Design_CollapsingToolbar_Subtitle)
 

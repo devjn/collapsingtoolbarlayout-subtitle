@@ -16,11 +16,13 @@
 
 package android.support.design.widget
 
+import android.animation.TimeInterpolator
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.*
 import android.os.Build
 import android.support.annotation.ColorInt
+import android.support.design.animation.AnimationUtils
 import android.support.v4.math.MathUtils
 import android.support.v4.text.TextDirectionHeuristicsCompat
 import android.support.v4.view.GravityCompat
@@ -103,7 +105,7 @@ internal class SubtitleCollapsingTextHelper(private val mView: View) {
     private val mSubtitlePaint: TextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG or Paint.SUBPIXEL_TEXT_FLAG)
 
     private var mPositionInterpolator: Interpolator? = null
-    private var mTextSizeInterpolator: Interpolator? = null
+    private var mTextSizeInterpolator: TimeInterpolator? = null
 
     private var mCollapsedShadowRadius: Float = 0f
     private var mCollapsedShadowDx: Float = 0f
@@ -115,7 +117,7 @@ internal class SubtitleCollapsingTextHelper(private val mView: View) {
     private var mExpandedShadowDy: Float = 0f
     private var mExpandedShadowColor: Int = 0
 
-    internal fun setTextSizeInterpolator(interpolator: Interpolator) {
+    internal fun setTextSizeInterpolator(interpolator: TimeInterpolator) {
         mTextSizeInterpolator = interpolator
         recalculate()
     }
@@ -812,6 +814,14 @@ internal class SubtitleCollapsingTextHelper(private val mView: View) {
         }
 
         private fun lerp(startValue: Float, endValue: Float, fraction: Float, interpolator: Interpolator?): Float = AnimationUtils.lerp(startValue, endValue, interpolator?.let { interpolator.getInterpolation(fraction) } ?: fraction)
+
+        private fun lerp(startValue: Float, endValue: Float, fraction: Float, interpolator: TimeInterpolator?): Float {
+            var fraction = fraction
+            if (interpolator != null) {
+                fraction = interpolator.getInterpolation(fraction)
+            }
+            return AnimationUtils.lerp(startValue, endValue, fraction)
+        }
 
         private fun rectEquals(r: Rect, left: Int, top: Int, right: Int, bottom: Int) = !(r.left != left || r.top != top || r.right != right || r.bottom != bottom)
     }
