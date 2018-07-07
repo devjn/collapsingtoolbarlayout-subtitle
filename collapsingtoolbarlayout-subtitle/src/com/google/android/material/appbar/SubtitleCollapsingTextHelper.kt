@@ -14,25 +14,26 @@
  * limitations under the License.
  */
 
-package android.support.design.widget
+package com.google.android.material.appbar
 
 import android.animation.TimeInterpolator
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.*
 import android.os.Build
-import android.support.annotation.ColorInt
-import android.support.design.animation.AnimationUtils
-import android.support.v4.math.MathUtils
-import android.support.v4.text.TextDirectionHeuristicsCompat
-import android.support.v4.view.GravityCompat
-import android.support.v4.view.ViewCompat
-import android.support.v7.widget.TintTypedArray
+import androidx.annotation.ColorInt
+import com.google.android.material.animation.AnimationUtils
+import androidx.core.math.MathUtils
+import androidx.core.text.TextDirectionHeuristicsCompat
+import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.appcompat.widget.TintTypedArray
 import android.text.TextPaint
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.view.animation.Interpolator
+import androidx.appcompat.R
 
 /**
  * @see CollapsingTextHelper
@@ -238,17 +239,17 @@ internal class SubtitleCollapsingTextHelper(private val mView: View) {
         }
 
     internal fun setCollapsedTitleTextAppearance(resId: Int) {
-        val a = TintTypedArray.obtainStyledAttributes(mView.context, resId, android.support.v7.appcompat.R.styleable.TextAppearance)
-        if (a.hasValue(android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor)) {
-            mCollapsedTitleColor = a.getColorStateList(android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor)
+        val a = TintTypedArray.obtainStyledAttributes(mView.context, resId, R.styleable.TextAppearance)
+        if (a.hasValue(R.styleable.TextAppearance_android_textColor)) {
+            mCollapsedTitleColor = a.getColorStateList(R.styleable.TextAppearance_android_textColor)
         }
-        if (a.hasValue(android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize)) {
-            mCollapsedTitleSize = a.getDimensionPixelSize(android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize, mExpandedSubtitleSize.toInt()).toFloat()
+        if (a.hasValue(R.styleable.TextAppearance_android_textSize)) {
+            mCollapsedTitleSize = a.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, mExpandedSubtitleSize.toInt()).toFloat()
         }
-        mCollapsedShadowColor = a.getInt(android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowColor, 0)
-        mCollapsedShadowDx = a.getFloat(android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowDx, 0f)
-        mCollapsedShadowDy = a.getFloat(android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowDy, 0f)
-        mCollapsedShadowRadius = a.getFloat(android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowRadius, 0f)
+        mCollapsedShadowColor = a.getInt(R.styleable.TextAppearance_android_shadowColor, 0)
+        mCollapsedShadowDx = a.getFloat(R.styleable.TextAppearance_android_shadowDx, 0f)
+        mCollapsedShadowDy = a.getFloat(R.styleable.TextAppearance_android_shadowDy, 0f)
+        mCollapsedShadowRadius = a.getFloat(R.styleable.TextAppearance_android_shadowRadius, 0f)
         a.recycle()
         if (Build.VERSION.SDK_INT >= 16) {
             mCollapsedTitleTypeface = readFontFamilyTypeface(resId)
@@ -257,17 +258,17 @@ internal class SubtitleCollapsingTextHelper(private val mView: View) {
     }
 
     internal fun setExpandedTitleTextAppearance(resId: Int) {
-        val a = TintTypedArray.obtainStyledAttributes(mView.context, resId, android.support.v7.appcompat.R.styleable.TextAppearance)
-        if (a.hasValue(android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor)) {
-            mExpandedTitleColor = a.getColorStateList(android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor)
+        val a = TintTypedArray.obtainStyledAttributes(mView.context, resId, R.styleable.TextAppearance)
+        if (a.hasValue(R.styleable.TextAppearance_android_textColor)) {
+            mExpandedTitleColor = a.getColorStateList(R.styleable.TextAppearance_android_textColor)
         }
-        if (a.hasValue(android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize)) {
-            mExpandedTitleSize = a.getDimensionPixelSize(android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize, mExpandedTitleSize.toInt()).toFloat()
+        if (a.hasValue(R.styleable.TextAppearance_android_textSize)) {
+            mExpandedTitleSize = a.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, mExpandedTitleSize.toInt()).toFloat()
         }
-        mExpandedShadowColor = a.getInt(android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowColor, 0)
-        mExpandedShadowDx = a.getFloat(android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowDx, 0f)
-        mExpandedShadowDy = a.getFloat(android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowDy, 0f)
-        mExpandedShadowRadius = a.getFloat(android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowRadius, 0f)
+        mExpandedShadowColor = a.getInt(R.styleable.TextAppearance_android_shadowColor, 0)
+        mExpandedShadowDx = a.getFloat(R.styleable.TextAppearance_android_shadowDx, 0f)
+        mExpandedShadowDy = a.getFloat(R.styleable.TextAppearance_android_shadowDy, 0f)
+        mExpandedShadowRadius = a.getFloat(R.styleable.TextAppearance_android_shadowRadius, 0f)
         a.recycle()
         if (Build.VERSION.SDK_INT >= 16) {
             mExpandedTitleTypeface = readFontFamilyTypeface(resId)
@@ -276,12 +277,12 @@ internal class SubtitleCollapsingTextHelper(private val mView: View) {
     }
 
     internal fun setCollapsedSubtitleTextAppearance(resId: Int) {
-        val a = TintTypedArray.obtainStyledAttributes(mView.context, resId, android.support.v7.appcompat.R.styleable.TextAppearance)
-        if (a.hasValue(android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor)) {
-            mCollapsedSubtitleColor = a.getColorStateList(android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor)
+        val a = TintTypedArray.obtainStyledAttributes(mView.context, resId, R.styleable.TextAppearance)
+        if (a.hasValue(R.styleable.TextAppearance_android_textColor)) {
+            mCollapsedSubtitleColor = a.getColorStateList(R.styleable.TextAppearance_android_textColor)
         }
-        if (a.hasValue(android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize)) {
-            mCollapsedSubtitleSize = a.getDimensionPixelSize(android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize, mCollapsedSubtitleSize.toInt()).toFloat()
+        if (a.hasValue(R.styleable.TextAppearance_android_textSize)) {
+            mCollapsedSubtitleSize = a.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, mCollapsedSubtitleSize.toInt()).toFloat()
         }
         a.recycle()
         if (Build.VERSION.SDK_INT >= 16) {
@@ -291,12 +292,12 @@ internal class SubtitleCollapsingTextHelper(private val mView: View) {
     }
 
     internal fun setExpandedSubtitleTextAppearance(resId: Int) {
-        val a = TintTypedArray.obtainStyledAttributes(mView.context, resId, android.support.v7.appcompat.R.styleable.TextAppearance)
-        if (a.hasValue(android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor)) {
-            mExpandedSubtitleColor = a.getColorStateList(android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor)
+        val a = TintTypedArray.obtainStyledAttributes(mView.context, resId, R.styleable.TextAppearance)
+        if (a.hasValue(R.styleable.TextAppearance_android_textColor)) {
+            mExpandedSubtitleColor = a.getColorStateList(R.styleable.TextAppearance_android_textColor)
         }
-        if (a.hasValue(android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize)) {
-            mExpandedSubtitleSize = a.getDimensionPixelSize(android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize, mExpandedSubtitleSize.toInt()).toFloat()
+        if (a.hasValue(R.styleable.TextAppearance_android_textSize)) {
+            mExpandedSubtitleSize = a.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, mExpandedSubtitleSize.toInt()).toFloat()
         }
         a.recycle()
         if (Build.VERSION.SDK_INT >= 16) {

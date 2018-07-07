@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.support.design.widget
+package com.google.android.material.appbar
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
@@ -26,26 +26,26 @@ import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.support.annotation.*
-import android.support.annotation.IntRange
-import android.support.design.widget.CollapsingToolbarLayout.getViewOffsetHelper
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v4.math.MathUtils
-import android.support.v4.util.ObjectsCompat
-import android.support.v4.view.GravityCompat
-import android.support.v4.view.ViewCompat
-import android.support.v4.view.WindowInsetsCompat
-import android.support.v4.widget.ViewGroupUtils
-import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
-import android.support.design.animation.AnimationUtils;
 import android.widget.FrameLayout
+import androidx.annotation.*
+import androidx.annotation.IntRange
+import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.ViewGroupUtils
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.math.MathUtils
+import androidx.core.util.ObjectsCompat
+import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.animation.AnimationUtils
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.hendraanggrian.collapsingtoolbarlayout.subtitle.R
 
 /**
@@ -91,7 +91,7 @@ open class SubtitleCollapsingToolbarLayout @JvmOverloads constructor(
 
     init {
         mCollapsingTextHelper = SubtitleCollapsingTextHelper(this)
-        mCollapsingTextHelper.setTextSizeInterpolator(android.support.design.animation.AnimationUtils.DECELERATE_INTERPOLATOR)
+        mCollapsingTextHelper.setTextSizeInterpolator(com.google.android.material.animation.AnimationUtils.DECELERATE_INTERPOLATOR)
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.SubtitleCollapsingToolbarLayout, defStyleAttr, R.style.Widget_Design_CollapsingToolbar_Subtitle)
 
@@ -122,7 +122,7 @@ open class SubtitleCollapsingToolbarLayout @JvmOverloads constructor(
 
         // First load the default text appearances
         mCollapsingTextHelper.setExpandedTitleTextAppearance(R.style.TextAppearance_Design_CollapsingToolbar_Expanded)
-        mCollapsingTextHelper.setCollapsedTitleTextAppearance(android.support.v7.appcompat.R.style.TextAppearance_AppCompat_Widget_ActionBar_Title)
+        mCollapsingTextHelper.setCollapsedTitleTextAppearance(androidx.appcompat.R.style.TextAppearance_AppCompat_Widget_ActionBar_Title)
 
         // Now overlay any custom text appearances
         if (a.hasValue(R.styleable.SubtitleCollapsingToolbarLayout_expandedTitleTextAppearance)) {
@@ -307,7 +307,7 @@ open class SubtitleCollapsingToolbarLayout @JvmOverloads constructor(
             }
         }
         if (mCollapsingTitleEnabled && mDummyView != null) {
-            mDrawCollapsingTitle = ViewCompat.isAttachedToWindow(mDummyView) && mDummyView!!.visibility == View.VISIBLE
+            mDrawCollapsingTitle = ViewCompat.isAttachedToWindow(mDummyView!!) && mDummyView!!.visibility == View.VISIBLE
             if (mDrawCollapsingTitle) {
                 val isRtl = ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL
                 val maxOffset = getMaxOffsetForPinChild(if (mToolbarDirectChild != null) mToolbarDirectChild!! else mToolbar!!)
@@ -336,7 +336,7 @@ open class SubtitleCollapsingToolbarLayout @JvmOverloads constructor(
         var i = 0
         val z = childCount
         while (i < z) {
-            getViewOffsetHelper(getChildAt(i)).onViewLayout()
+            CollapsingToolbarLayout.getViewOffsetHelper(getChildAt(i)).onViewLayout()
             i++
         }
         if (mToolbar != null) {
@@ -404,7 +404,7 @@ open class SubtitleCollapsingToolbarLayout @JvmOverloads constructor(
             if (alpha != mScrimAlpha) {
                 val contentScrim = mContentScrim
                 if (contentScrim != null && mToolbar != null) {
-                    ViewCompat.postInvalidateOnAnimation(mToolbar)
+                    ViewCompat.postInvalidateOnAnimation(mToolbar!!)
                 }
                 mScrimAlpha = alpha
                 ViewCompat.postInvalidateOnAnimation(this@SubtitleCollapsingToolbarLayout)
@@ -655,7 +655,7 @@ open class SubtitleCollapsingToolbarLayout @JvmOverloads constructor(
     }
 
     internal fun getMaxOffsetForPinChild(child: View): Int {
-        val offsetHelper = getViewOffsetHelper(child)
+        val offsetHelper = CollapsingToolbarLayout.getViewOffsetHelper(child)
         val lp = child.layoutParams as LayoutParams
         return height - offsetHelper.layoutTop - child.height - lp.bottomMargin
     }
@@ -669,7 +669,7 @@ open class SubtitleCollapsingToolbarLayout @JvmOverloads constructor(
             while (i < z) {
                 val child = getChildAt(i)
                 val lp = child.layoutParams as LayoutParams
-                val offsetHelper = getViewOffsetHelper(child)
+                val offsetHelper = CollapsingToolbarLayout.getViewOffsetHelper(child)
                 when (lp.collapseMode) {
                     CollapsingToolbarLayout.LayoutParams.COLLAPSE_MODE_PIN -> offsetHelper.topAndBottomOffset = MathUtils.clamp(-verticalOffset, 0, getMaxOffsetForPinChild(child))
                     CollapsingToolbarLayout.LayoutParams.COLLAPSE_MODE_PARALLAX -> offsetHelper.topAndBottomOffset = Math.round(-verticalOffset * lp.parallaxMultiplier)
